@@ -558,28 +558,17 @@ ObjectAccessor::Update(uint32 diff)
                     {
                         CellPair cell_pair(x,y);
                         map->markCell(cell_id);
-
-                    if (!MapManager::Instance ().HasUpdateAllMaps ())
-                      {
-                        Cell cell (cell_pair);
+                        Cell cell(cell_pair);
                         cell.data.Part.reserved = CENTER_DISTRICT;
-                        cell.SetNoCreate ();
-                        CellLock<NullGuard> cell_lock (cell, cell_pair);
-                        cell_lock->Visit (cell_lock, grid_object_update, *map);
-                        cell_lock->Visit (cell_lock, world_object_update, *map);
-                      }
-                    else
-                      {
-                          map->AddCellForUpdate (cell_pair);
-                      }
+                        cell.SetNoCreate();
+                        CellLock<NullGuard> cell_lock(cell, cell_pair);
+                        cell_lock->Visit(cell_lock, grid_object_update,  *map);
+                        cell_lock->Visit(cell_lock, world_object_update, *map);
                     }
                 }
             }
         }
     }
-
-  if (MapManager::Instance ().HasUpdateAllMaps ())
-    MapManager::Instance ().UpdateAllMaps (diff);
 
     _update();
 }
